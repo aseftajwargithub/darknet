@@ -51,15 +51,14 @@ parser.add_argument("-i",
                 help="Path to pascal voc directory",
                 type=str)
 
+args = parser.parse_args()
+
 if(args.input is None):
     args.input = os.getcwd()
-
 
 assert(os.path.isdir(args.input))	
 
 wd = args.input
-
-
 
 for year, image_set in sets:
     if not os.path.exists('VOCdevkit/VOC%s/labels/'%(year)):
