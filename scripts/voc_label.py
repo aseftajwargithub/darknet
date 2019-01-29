@@ -3,6 +3,7 @@ import pickle
 import os
 from os import listdir, getcwd
 from os.path import join
+import argparse
 
 sets=[('2012', 'train'), ('2012', 'val'), ('2007', 'train'), ('2007', 'val'), ('2007', 'test')]
 
@@ -42,7 +43,23 @@ def convert_annotation(year, image_id):
         bb = convert((w,h), b)
         out_file.write(str(cls_id) + " " + " ".join([str(a) for a in bb]) + '\n')
 
-wd = getcwd()
+
+parser = argparse.ArgumentParser(description="Sample TensorFlow json-to-CSV converter")
+	
+parser.add_argument("-i",
+                "--input",
+                help="Path to pascal voc directory",
+                type=str)
+
+if(args.input is None):
+    args.input = os.getcwd()
+
+
+assert(os.path.isdir(args.input))	
+
+wd = args.input
+
+
 
 for year, image_set in sets:
     if not os.path.exists('VOCdevkit/VOC%s/labels/'%(year)):
